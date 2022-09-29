@@ -1,55 +1,68 @@
 // The following line makes sure your styles are included in the project. Don't remove this.
+
 import "../styles/main.scss";
+
 // Import any additional modules you want to include below \/
 
-import dataImport from "./data.js";
-console.log(dataImport);
+import dataImported from "./data.js";
+
 // \/ All of your javascript should go here \/
-const dataParse = JSON.parse(dataImport);
-console.log(dataParse);
+// console.log(dataImported);
+
 const container = document.querySelector(".container");
+const dataParse = JSON.parse(dataImported);
+// console.log(dataParse);
 
-for (const [key, value] of Object.entries(recipesParsed)) {
-  createCard(value, key);
+for (const item of Object.values(dataParse)) {
+  console.log(item);
+  createCard(item);
 }
+// for (const [key, value] in dataParse) {
+//   console.log(value[key]);
+// }
 
-// Create Card Function
-function createCard(value, key) {
-  for (const item of value) {
+function createCard(item) {
+  for (const el of item) {
+    // console.log(el);
+    //   console.log(item[1]);
     // Card Container
+
     const cardContainer = document.createElement("div");
     cardContainer.classList.add("card");
     cardContainer.style.width = "18rem";
     cardContainer.style.marginRight = "2rem";
 
     // Image
+
     const img = document.createElement("img");
     img.classList.add("card-img-top", "img-fluid");
-    img.src = item.image;
+    img.src = el.image;
     img.style.height = "14rem";
 
     // Card Body
+
     const cardBody = document.createElement("div");
     cardBody.classList.add("card-body");
 
     // Heading
+
     const heading = document.createElement("h5");
     heading.classList.add("card-title");
-    heading.textContent = item.title;
+    heading.textContent = el.title;
 
     // Person Name
+
     const personName = document.createElement("p");
     personName.classList.add("card-text", "border-bottom");
-    personName.textContent = item.author;
+    personName.textContent = el.author;
 
     // Ingredients
+
     const ingredients = document.createElement("p");
     ingredients.classList.add("card-text");
-    ingredients.textContent = item.ingredients;
-
+    ingredients.textContent = el.ingredients;
     cardContainer.append(img, cardBody);
     cardBody.append(heading, personName, ingredients);
-    // body.append(cardContainer);
-    container.querySelector(`#${item.type}`).append(cardContainer);
+    container.querySelector(`#${el.type}`).append(cardContainer);
   }
 }
